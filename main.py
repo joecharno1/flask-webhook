@@ -7,7 +7,7 @@ app = Flask(__name__)
 VERIFY_TOKEN = "crossfit"
 
 # Your Page Access Token (paste your actual Page token here)
-PAGE_ACCESS_TOKEN = "EAAOM5Y4Ob84BOZBZC2DUcxDbO7kvZAWzd9EXLZAuFe319Abr7QKKQdxpboRGIT4UCbO7Gck5FVZBE7KgyPVXz0tt4C51nVOxjMgL39tDWSoB2VFDar93KHinDxPzKr33tdZAhrx4VK3FnIOsJVUlyjtB41pmBhkCqzXjdbEmJ7PUqHbAqIfZAfhZC5UgTwZCXjZAyBdxJH0P0XcTIZBLZBCP0gZDZD"
+PAGE_ACCESS_TOKEN = "EAAOM5Y4Ob84BOZBecngBuHaRToLWPqxS0iIapwEZCJCgW5A9pYbAvFN0ZAJRvPDAZB6LMe9mCp6Ozjq5ysZCIL9D9RUyKrwpZAtRoGHBMn5W1ZBDUYnB0L9Di6Pp6ZBOGU584S2hyyxZCyOVBDDmzioIoUgrhX4ZCln6BOhN3gFaqMklK4xTg2tr0lCYtG8j5ZChZBwhu1qkTDODI028wZAgjE7K9wX5b4wZDZD"
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -41,7 +41,7 @@ def webhook():
 def get_lead_data(lead_id):
     url = f"https://graph.facebook.com/v22.0/{lead_id}"
     params = {
-        "access_token": 'EAAOM5Y4Ob84BO0JT86269WOZBRDL7MJxllnaUbkb5oTNiK60bm3swgyAdSh1QkpWtALGTuZCQhaTKf8JsXFHmhC0ZAa2xRnMJZCkAQ60GYZAMTaHWXXJSnHipZCdfWzhS5iLqdIcwF1pPr2Uhhh8tAxBkMAz608dY375QSECVhRXN5CCZBNQ8rE3Pz77KAX7csU'
+        "access_token": PAGE_ACCESS_TOKEN
     }
     response = requests.get(url, params=params)
     return response.json()
