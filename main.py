@@ -41,7 +41,10 @@ def get_lead_data(lead_id):
     params = {
         "access_token": PAGE_ACCESS_TOKEN
     }
+    print(f"📡 Fetching Lead Data for ID {lead_id} from {url}")
     response = requests.get(url, params=params)
+    print(f"🔎 Facebook Response Status: {response.status_code}")
+    print(f"📦 Facebook Response Body: {response.text}")
     return response.json()
 
 def send_to_zenplanner(lead_data):
