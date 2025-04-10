@@ -72,7 +72,8 @@ def send_to_zenplanner(lead_data):
 
         print("📤 Sending to Zen Planner:", payload)
         response = requests.post(ZEN_PLANNER_ENDPOINT, json=payload)
-        print("✅ Zen Planner Response:", response.text)
+        print("✅ Zen Planner Response Status:", response.status_code)
+        print("✅ Zen Planner Response Body:", response.text)
     except Exception as e:
         print("❌ Error sending to Zen Planner:", str(e))
 
