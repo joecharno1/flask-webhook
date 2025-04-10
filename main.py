@@ -5,9 +5,10 @@ app = Flask(__name__)
 
 VERIFY_TOKEN = "crossfit"
 PAGE_ACCESS_TOKEN = "EAAOM5Y4Ob84BOZBecngBuHaRToLWPqxS0iIapwEZCJCgW5A9pYbAvFN0ZAJRvPDAZB6LMe9mCp6Ozjq5ysZCIL9D9RUyKrwpZAtRoGHBMn5W1ZBDUYnB0L9Di6Pp6ZBOGU584S2hyyxZCyOVBDDmzioIoUgrhX4ZCln6BOhN3gFaqMklK4xTg2tr0lCYtG8j5ZChZBwhu1qkTDODI028wZAgjE7K9wX5b4wZDZD"
-USER_ACCESS_TOKEN = "EAAOM5Y4Ob84BOZBecngBuHaRToLWPqxS0iIapwEZCJCgW5A9pYbAvFN0ZAJRvPDAZB6LMe9mCp6Ozjq5ysZCIL9D9RUyKrwpZAtRoGHBMn5W1ZBDUYnB0L9Di6Pp6ZBOGU584S2hyyxZCyOVBDDmzioIoUgrhX4ZCln6BOhN3gFaqMklK4xTg2tr0lCYtG8j5ZChZBwhu1qkTDODI028wZAgjE7K9wX5b4wZDZD"
 
 ZEN_PLANNER_ENDPOINT = "https://api2.zenplanner.com/elements/api-v2/widgets/leadCapture"
+WIDGET_INSTANCE_ID = "ab3b2723-dda9-4ba4-b4b2-c854a1edf984"
+PARTITION_API_KEY = "6442eae4-7377-45f1-b0f7-e7d12738c8be"
 
 @app.route('/webhook', methods=['GET', 'POST'])
 def webhook():
@@ -29,7 +30,7 @@ def webhook():
                 page_id = change["value"].get("page_id")
 
                 lead_data = get_lead_data(leadgen_id)
-                print("📅 Full Lead Data:", lead_data)
+                print("📥 Full Lead Data:", lead_data)
 
                 send_to_zenplanner(lead_data)
 
@@ -38,7 +39,7 @@ def webhook():
 def get_lead_data(lead_id):
     url = f"https://graph.facebook.com/v22.0/{lead_id}"
     params = {
-        "access_token": USER_ACCESS_TOKEN
+        "access_token": PAGE_ACCESS_TOKEN
     }
     response = requests.get(url, params=params)
     return response.json()
@@ -46,9 +47,12 @@ def get_lead_data(lead_id):
 def send_to_zenplanner(lead_data):
     try:
         fields = lead_data.get("field_data", [])
+        full_name = get_field(fields, "full_name")
         payload = {
-            "firstName": get_field(fields, "full_name").split(" ")[0],
-            "lastName": get_field(fields, "full_name").split(" ")[-1],
+            "widgetInstanceId": WIDGET_INSTANCE_ID,
+            "partitionApiKey": PARTITION_API_KEY,
+            "firstName": full_name.split(" ")[0],
+            "lastName": full_name.split(" ")[-1],
             "email": get_field(fields, "email"),
             "phone": get_field(fields, "phone_number")
         }
