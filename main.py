@@ -41,7 +41,7 @@ def webhook():
 def get_lead_data(lead_id):
     url = f"https://graph.facebook.com/v22.0/{lead_id}"
     params = {
-        "access_token": PAGE_ACCESS_TOKEN
+        "access_token": 'EAAOM5Y4Ob84BO0JT86269WOZBRDL7MJxllnaUbkb5oTNiK60bm3swgyAdSh1QkpWtALGTuZCQhaTKf8JsXFHmhC0ZAa2xRnMJZCkAQ60GYZAMTaHWXXJSnHipZCdfWzhS5iLqdIcwF1pPr2Uhhh8tAxBkMAz608dY375QSECVhRXN5CCZBNQ8rE3Pz77KAX7csU'
     }
     response = requests.get(url, params=params)
     return response.json()
