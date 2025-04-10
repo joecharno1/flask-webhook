@@ -54,8 +54,8 @@ def send_to_zenplanner(lead_data):
         payload = {
             "widgetInstanceId": WIDGET_INSTANCE_ID,
             "partitionApiKey": PARTITION_API_KEY,
-            "firstName": full_name.split(" ")[0],
-            "lastName": full_name.split(" ")[-1],
+            "firstName": full_name.split(" ")[0] if full_name else "",
+            "lastName": full_name.split(" ")[-1] if full_name else "",
             "email": get_field(fields, "email"),
             "phone": get_field(fields, "phone_number")
         }
