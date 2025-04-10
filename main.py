@@ -51,19 +51,31 @@ def send_to_zenplanner(lead_data):
     try:
         fields = lead_data.get("field_data", [])
         full_name = get_field(fields, "full_name")
+        first = full_name.split(" ")[0]
+        last = full_name.split(" ")[-1]
+        email = get_field(fields, "email")
+        phone = get_field(fields, "phone_number")
+
         payload = {
             "widgetInstanceId": WIDGET_INSTANCE_ID,
-            "partitionApiKey": PARTITION_API_KEY,
-            "firstName": full_name.split(" ")[0] if full_name else "",
-            "lastName": full_name.split(" ")[-1] if full_name else "",
-            "email": get_field(fields, "email"),
-            "phone": get_field(fields, "phone_number")
+            "prospect": {
+                "firstName": first,
+                "lastName": last,
+                "primaryEmail": email,
+                "mobilePhone": phone,
+                "homePhone": "",
+                "workPhone": "",
+                "familyId": None,
+                "customFields": {}
+            }
         }
+
         print("📤 Sending to Zen Planner:", payload)
         response = requests.post(ZEN_PLANNER_ENDPOINT, json=payload)
         print("✅ Zen Planner Response:", response.text)
     except Exception as e:
         print("❌ Error sending to Zen Planner:", str(e))
+
 
 def get_field(fields, name):
     for field in fields:
